@@ -25,11 +25,11 @@ public class MainActivity extends AppCompatActivity {
 
     private long pageStartTime = 0;
     private WebView wv;
-    private ImageButton goBtn;
-    private EditText et;
+
+
 
     //
-
+    private String defaultURL="http://192.168.100.190:11014/login/login.do";
     //
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         wv = (WebView) findViewById(R.id.wv);
-        goBtn = (ImageButton) findViewById(R.id.go);
-        et = (EditText) findViewById(R.id.et);
+
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);
@@ -75,43 +75,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                et.setText(url);
+
             }
         });
 
         //WebView를 실행시켜 http에 접근합니다.
         wv.loadUrl("http://192.168.100.190:11014/login/login.do");
 
-        // setup events
-        goBtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    goBtn.setColorFilter(getResources().getColor(android.R.color.holo_blue_dark));
-                    return false;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    goBtn.setColorFilter(null);
-                    return false;
-                }
-                return false;
-            }
-        });
 
-        goBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleLoadUrl(true);
-            }
-        });
 
-        et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    handleLoadUrl(false);
-                }
-            }
-        });
+
+
+
     }
 
     //뒤로가기 버튼을 누를경우 히스토리에 저장되어 있는 url로 회귀합니다.
@@ -124,24 +99,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*
-    load하는 url을 관리하는 메소드 입니다.
-    * */
-    private void handleLoadUrl(boolean forceReload) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
 
-        String url = et.getText().toString(); //에디트 텍스트에서 문자열을 읽어들입니다.
-        //문자열 시작이 http가 아닐 경우 문자열 앞에 http관련 문자열을 붙여줍니다.
-        if (url.startsWith("http://")) {
-        } else if (url.startsWith("https://")) {
-        } else {
-            url = String.format("http://%s", url);
-        }
-
-        //ur????
-        if (!url.equals(wv.getUrl()) || forceReload) {
-            wv.loadUrl(url);
-        }
-    }
 }
