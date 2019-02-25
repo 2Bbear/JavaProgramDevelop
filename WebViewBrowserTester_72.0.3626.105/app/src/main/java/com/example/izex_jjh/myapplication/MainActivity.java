@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton goBtn;
     private EditText et;
 
+    //
+
+    //
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
