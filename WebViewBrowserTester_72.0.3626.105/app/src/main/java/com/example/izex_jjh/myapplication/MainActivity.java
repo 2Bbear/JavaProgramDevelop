@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //WebView를 실행시켜 http에 접근합니다.
-        wv.loadUrl("http://192.168.100.190:11014/login/login.do");
+        wv.loadUrl("http:google.com");
 
         // setup events
         goBtn.setOnTouchListener(new View.OnTouchListener() {
